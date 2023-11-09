@@ -21,7 +21,7 @@ var (
 
 	// some strings for idiomatic go in column names
 	// see https://github.com/golang/go/wiki/CodeReviewComments#initialisms
-	initialisms = []string{"ID", "JSON", "XML", "HTTP", "URL"}
+	initialisms = []string{}
 )
 
 // Run runs the transformations by creating the concrete Database by the provided settings
@@ -203,10 +203,16 @@ func generateImports(content *strings.Builder, settings *settings.Settings, colu
 }
 
 func mapDbColumnTypeToGoType(s *settings.Settings, db database.Database, column database.Column) (goType string, columnInfo columnInfo) {
-	if db.IsInteger(column) {
-		goType = "int"
+	if db.IsBigint(column) {
+		goType = "int64"
 		if db.IsNullable(column) {
-			goType = getNullType(s, "*int", "sql.NullInt64")
+			goType = getNullType(s, "*int64", "sql.NullInt64")
+			columnInfo.isNullable = true
+		}
+	} else if db.IsInteger(column) {
+		goType = "int32"
+		if db.IsNullable(column) {
+			goType = getNullType(s, "*int32", "sql.NullInt32")
 			columnInfo.isNullable = true
 		}
 	} else if db.IsFloat(column) {

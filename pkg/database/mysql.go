@@ -156,13 +156,24 @@ func (mysql *MySQL) GetIntegerDatatypes() []string {
 		"smallint",
 		"mediumint",
 		"int",
-		"bigint",
 	}
 }
 
 // IsInteger returns true if colum is of type integer for the MySQL database.
 func (mysql *MySQL) IsInteger(column Column) bool {
 	return isStringInSlice(column.DataType, mysql.GetIntegerDatatypes())
+}
+
+// GetBigintDatatypes returns the integer datatypes for the MySQL database.
+func (mysql *MySQL) GetBigintDatatypes() []string {
+	return []string{
+		"bigint",
+	}
+}
+
+// IsBigint returns true if colum is of type integer for the MySQL database.
+func (mysql *MySQL) IsBigint(column Column) bool {
+	return isStringInSlice(column.DataType, mysql.GetBigintDatatypes())
 }
 
 // GetFloatDatatypes returns the float datatypes for the MySQL database.

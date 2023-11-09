@@ -158,16 +158,27 @@ func (pg *Postgresql) GetIntegerDatatypes() []string {
 	return []string{
 		"smallint",
 		"integer",
-		"bigint",
 		"smallserial",
 		"serial",
-		"bigserial",
 	}
 }
 
 // IsInteger returns true if colum is of type integer for the Postgresql database.
 func (pg *Postgresql) IsInteger(column Column) bool {
 	return isStringInSlice(column.DataType, pg.GetIntegerDatatypes())
+}
+
+// GetBigintDatatypes returns the integer datatypes for the Postgresql database.
+func (pg *Postgresql) GetBigintDatatypes() []string {
+	return []string{
+		"bigint",
+		"bigserial",
+	}
+}
+
+// IsBigint returns true if colum is of type integer for the Postgresql database.
+func (pg *Postgresql) IsBigint(column Column) bool {
+	return isStringInSlice(column.DataType, pg.GetBigintDatatypes())
 }
 
 // GetFloatDatatypes returns the float datatypes for the Postgresql database.
